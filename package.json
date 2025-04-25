@@ -1,0 +1,24 @@
+{
+  "name": "web2025-5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niki22sh/web2025-5.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/niki22sh/web2025-5/issues"
+  },
+  "homepage": "https://github.com/niki22sh/web2025-5#readme",
+  "dependencies": {
+    "commander": "^13.1.0",
+    "superagent": "^10.2.0"
+  }
+}

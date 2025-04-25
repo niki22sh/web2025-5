@@ -15,7 +15,7 @@ const options = program.opts();
 const cacheDir = options.cache;
 
 function getImagePath(code) {
-  return path.join(cacheDir, ${code}.jpg)
+  return path.join(cacheDir, `${code}.jpg`);
 }
 
 async function directoryExists() {
@@ -49,6 +49,17 @@ async function startServer(){
           }
           break;
         }
+        case 'PUT': {
+            res.writeHead(201, {'Content-Type': 'text/plain'});
+            res.end('Created');
+            break;
+        }
+        case 'DELETE': {
+          await fs.unlink(filePath);
+          res.writeHead(200, { 'Content-Type': 'text/plain' });
+          res.end('Deleted');
+          break;
+      }
         default:
           res.writeHead(405, {'Content-Type': 'text/plain'});
           res.end('Method Not Allowed');
@@ -60,8 +71,9 @@ async function startServer(){
   });
 
   server.listen(options.port, options.host, () => {
-    console.log(Server working on http://${options.host}:${options.port});
+    console.log(`Server working on http://${options.host}:${options.port}`);
   });
 }
 
 startServer();
+

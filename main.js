@@ -56,7 +56,7 @@ async function startServer(){
                         const writeStream = fsSync.createWriteStream(filePath);
                         superagent
                             .get(url)
-                            .on('error', (err) => {
+                            .on('error', () => {
                                 res.writeHead(404, {'Content-Type': 'text/plain'});
                                 res.end('Not Found');
                             })
@@ -70,22 +70,18 @@ async function startServer(){
                     break;
                 }
                 case 'PUT': {
-                    const url = `https://http.cat/${code}`
                     const writeStream = fsSync.createWriteStream(filePath);
-                    superagent
-                        .get(url)
-                        .on('error', (err) => {
-                            res.writeHead(404, {'Content-Type': 'text/plain'});
-                            res.end('Not Found');
-                        })
-                        .pipe(writeStream)
-                        .on('finish', () => {
+                    req.pipe(writeStream);
+                    writeStream.on('finish', () => {
                         res.writeHead(201, { 'Content-Type': 'text/plain' });
                         res.end('Created');
-    });
+                    });
+                    writeStream.on('error', () => {
+                        res.writeHead(500, { 'Content-Type': 'text/plain' });
+                        res.end('Internal Server Error');
+                    });
                     break;
                 }
-
                 case 'DELETE': {
                     await fs.unlink(filePath);
                     res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -108,4 +104,3 @@ async function startServer(){
     })
 }
 startServer();
-
